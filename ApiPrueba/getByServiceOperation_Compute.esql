@@ -1,0 +1,31 @@
+
+
+CREATE COMPUTE MODULE getByServiceOperation_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		create field InputLocalEnvironment.REST.Input.Parameters;
+		declare parametros reference to InputLocalEnvironment.REST.Input.Parameters;
+		
+		create field OutputRoot.JSON.Data;
+		declare salida reference to OutputRoot.JSON.Data;
+		
+		declare nombreServicio character parametros.servicio;
+		declare nombreOperacion character parametros.operacion;
+		
+		create field Environment.resultados;
+		declare resultados reference to Environment.resultados;
+		
+		-- uso con base de datos
+		declare indice int 1;
+		declare cantidadRegistros int;
+		
+		--set resultados[] = PASSTRHU()
+		
+		-- luego itero los resultados y seteo la salida
+		
+		set salida.valor = nombreServicio || ' ' ||nombreOperacion;
+		
+		RETURN TRUE;
+	END;
+END MODULE;

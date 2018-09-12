@@ -1,0 +1,119 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API de práctica",
+    "version" : "1.0.0",
+    "title" : "Auditoría"
+  },
+  "host" : "dasoa-01:7802",
+  "basePath" : "/auditoria",
+  "tags" : [ {
+    "name" : "auditoria",
+    "description" : "Operaciones de auditoría en desarrollo"
+  } ],
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/audit/{txid}" : {
+      "get" : {
+        "tags" : [ "auditoria" ],
+        "summary" : "Obtener registros por TxID",
+        "operationId" : "getByTxId",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "txid",
+          "in" : "path",
+          "description" : "TxID necesario para obtener registro",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Registro"
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/audit/{servicio}/{operacion}" : {
+      "get" : {
+        "tags" : [ "auditoria" ],
+        "summary" : "Se obtienen registros por servicio y operación",
+        "description" : " Se pasan los parámetros por path, luego el subflujo correspondiente loscaptura y los procesa",
+        "operationId" : "getByServiceOperation",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "servicio",
+          "in" : "path",
+          "description" : "nombre del servicio",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "operacion",
+          "in" : "path",
+          "description" : "nombre del servicio",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "petstore_auth" : {
+      "type" : "oauth2",
+      "authorizationUrl" : "http://petstore.swagger.io/oauth/dialog",
+      "flow" : "implicit",
+      "scopes" : {
+        "write:pets" : "modify pets in your account",
+        "read:pets" : "read your pets"
+      }
+    },
+    "api_key" : {
+      "type" : "apiKey",
+      "name" : "api_key",
+      "in" : "header"
+    }
+  },
+  "definitions" : {
+    "Registro" : {
+      "type" : "object",
+      "properties" : {
+        "D_TXID" : {
+          "type" : "string"
+        },
+        "D_SERVICE" : {
+          "type" : "string"
+        },
+        "D_OPERATION" : {
+          "type" : "string"
+        },
+        "D_TIMESTAMP_IN" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "D_TIMESTAMP_OUT" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    }
+  }
+}
